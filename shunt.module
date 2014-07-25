@@ -146,9 +146,25 @@ function shunt_menu() {
  * Implements hook_shunt().
  */
 function shunt_shunt() {
-  return array(
+  $shunts = array(
     'shunt' => t('The default shunt.'),
+    'login' => t('Shunts the user login feature.'),
   );
+
+  if (module_exists('webform')) {
+    $shunts['webform'] = t('Shunts all webforms.');
+  }
+  if (module_exists('search')) {
+    $shunts['search'] = t('Shunts all search forms.');
+  }
+  if (module_exists('services')) {
+    $shunts['services'] = t('Shunts all services endpoints.');
+  }
+  if (module_exists('views')) {
+    $shunts['views_exposed_form'] = t('Shunts all Views exposed forms.');
+  }
+
+  return $shunts;
 }
 
 /**
@@ -274,4 +290,91 @@ function _shunt_set_status_multiple($shunts, $warn_when_same = TRUE) {
       drupal_set_message(t('Shunt "@name" has been disabled.', $args));
     }
   }
+}
+
+/**
+ * Implements hook_form_alter().
+ */
+function shunt_form_alter(&$form, &$form_state, $form_id) {
+  if ($form_id == 'views_exposed_form' && shunt_is_enabled('views_exposed_form')
+   || in_array($form_id, array('search_block_form', 'search_form')) && shunt_is_enabled('search')
+   || $form_id == 'user_login' && shunt_is_enabled('login')
+   || strpos($form['#form_id'], 'webform_client_form') !== FALSE && shunt_is_enabled('webform')) {
+    // Unforunately, this ONLY disables the form.
+    // For the search shunt, searches may still be
+    // performed by visiting /search/*.
+    $form = shunt_disabled_form();
+  }
+}
+
+/**
+ * Implements hook_theme().
+ */
+function shunt_theme() {
+  return array(
+    'shunt_message' => array(
+      'variables' => array(
+        'message' => NULL,
+      ),
+      'template' => 'shunt-message',
+    ),
+  );
+}
+
+/**
+ * Returns the standard apology markup for a disable form.
+ */
+function shunt_disabled_form() {
+  $message = variable_get('shunt_message_forms', t("We're sorry. this form is currently unavailable."));
+  $form = array(
+    '#markup' => theme('shunt_message', array('message' => $message)),
+  );
+
+  return $form;
+}
+
+/**
+ * Implements hook_views_pre_view().
+ */
+function shunt_views_pre_build(&$view) {
+  if (shunt_is_enabled('views_exposed_form')) {
+    if ($view->inited && $view->display[$view->current_display]->handler->uses_exposed()) {
+      // Prematurely flag this view as executed and built, thereby preventing
+      // actual execution and building.
+      $view->executed = TRUE;
+      $view->built = TRUE;
+    }
+  }
+}
+
+/**
+ * Implements hook_views_post_render().
+ */
+function shunt_views_post_render(&$view, &$output, &$cache) {
+  if (shunt_is_enabled('views_exposed_form')) {
+    if ($view->inited && $view->display[$view->current_display]->handler->uses_exposed()) {
+      $message = variable_get('shunt_message_views', t("We're sorry, the data for this page is currently unavailable."));
+      $output = theme('shunt_message', array('message' => $message));
+    }
+  }
+}
+
+/**
+ * Implements hook_services_request_preprocess_alter().
+ */
+function shunt_services_request_preprocess_alter(&$controller, &$args, $options) {
+  // If services shunt has been tripped, throw a 500 error.
+  if (shunt_is_enabled('services')) {
+    $controller['callback'] = 'shunt_services_resource_callback';
+  }
+}
+
+/**
+ * Replacement callback for all resources when shunt is enabled.
+ */
+function shunt_services_resource_callback() {
+  $status_code = 500;
+  $message = variable_get('shunt_message_services', t("We're sorry. This service is currently unavailable."));
+
+  services_error($message, $status_code);
 }
