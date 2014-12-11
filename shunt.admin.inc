@@ -93,39 +93,14 @@ function shunt_admin_settings_form() {
     ),
   );
 
-  // Add submit button and handler.
-  $form['actions']['#type'] = 'actions';
-  $form['actions']['submit'] = array(
-    '#type' => 'submit',
-    '#value' => t('Save configuration'),
-  );
   $form['#submit'][] = 'shunt_admin_settings_form_submit';
 
-  return $form;
+  return system_settings_form($form);
 }
 
 /**
  * Form submission handler for shunt_admin_settings_form().
  */
 function shunt_admin_settings_form_submit($form, &$form_state) {
-
   _shunt_set_status_multiple($form_state['values']['shunts'], FALSE);
-
-  // Create array of form values to set as variables.
-  $variables = array(
-    'shunt_message_forms',
-    'shunt_message_views',
-    'shunt_message_services',
-  );
-
-  // Exclude unnecessary elements.
-  form_state_values_clean($form_state);
-
-  foreach ($variables as $key) {
-    $value = $form_state['values'][$key];
-    if (is_array($value) && isset($form_state['values']['array_filter'])) {
-      $value = array_keys(array_filter($value));
-    }
-    variable_set($key, $value);
-  }
 }
