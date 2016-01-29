@@ -73,7 +73,7 @@ class ShuntListBuilder extends ConfigEntityListBuilder {
    */
   public function render() {
     $build = parent::render();
-    $build['#empty'] = $this->t('No shunts available.');
+    $build['table']['#empty'] = $this->t('No shunts available.');
     return $build;
   }
 
