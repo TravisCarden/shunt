@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\shunt\Controller\ShuntListBuilder.
- */
-
 namespace Drupal\shunt\Controller;
 
 use Drupal\Component\Utility\Xss;
@@ -50,13 +45,13 @@ class ShuntListBuilder extends ConfigEntityListBuilder {
 
     if ($entity->isTripped()) {
       $operations['reset'] = [
-        'title' => t('Reset'),
+        'title' => $this->t('Reset'),
         'url' => $entity->urlInfo('reset'),
       ];
     }
     else {
       $operations['trip'] = [
-        'title' => t('Trip'),
+        'title' => $this->t('Trip'),
         'url' => $entity->urlInfo('trip'),
       ];
     }

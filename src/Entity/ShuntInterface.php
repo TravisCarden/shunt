@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\shunt\ShuntInterface.
- */
-
 namespace Drupal\shunt\Entity;
 
 use Drupal\Core\Config\Entity\ConfigEntityInterface;

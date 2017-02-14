@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\shunt\Tests\ShuntFormTest.
- */
-
 namespace Drupal\shunt\Tests;
 
 /**

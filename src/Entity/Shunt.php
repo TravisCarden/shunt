@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\shunt\Entity\Shunt.
- */
-
 namespace Drupal\shunt\Entity;
 
 use Drupal\Core\Config\Entity\ConfigEntityBase;
@@ -130,7 +125,7 @@ class Shunt extends ConfigEntityBase implements ShuntInterface {
     $t_args = ['%id' => $this->id()];
 
     if ($this->isTripped()) {
-      drupal_set_message(t('Shunt %id is already tripped.', $t_args), 'warning');
+      drupal_set_message($this->t('Shunt %id is already tripped.', $t_args), 'warning');
       return;
     }
 
@@ -139,7 +134,7 @@ class Shunt extends ConfigEntityBase implements ShuntInterface {
     \Drupal::state()->set($this->getStatusStateKey(), TRUE);
 
     \Drupal::logger('shunt')->notice('Tripped shunt %id.', $t_args);
-    drupal_set_message(t('Shunt %id has been tripped.', $t_args));
+    drupal_set_message($this->t('Shunt %id has been tripped.', $t_args));
   }
 
   /**
@@ -149,7 +144,7 @@ class Shunt extends ConfigEntityBase implements ShuntInterface {
     $t_args = ['%id' => $this->id()];
 
     if (!$this->isTripped()) {
-      drupal_set_message(t('Shunt %id is not tripped.', $t_args), 'warning');
+      drupal_set_message($this->t('Shunt %id is not tripped.', $t_args), 'warning');
       return;
     }
 
@@ -158,7 +153,7 @@ class Shunt extends ConfigEntityBase implements ShuntInterface {
     \Drupal::state()->set($this->getStatusStateKey(), FALSE);
 
     \Drupal::logger('shunt')->notice('Reset shunt %id.', $t_args);
-    drupal_set_message(t('Shunt %id has been reset.', $t_args));
+    drupal_set_message($this->t('Shunt %id has been reset.', $t_args));
   }
 
   /**

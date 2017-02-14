@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\shunt\Tests\ShuntListBuilderTest.
- */
-
 namespace Drupal\shunt\Tests;
 
 use Drupal\shunt\Entity\Shunt;

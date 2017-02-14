@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\example\Form\ShuntDeleteForm.
- */
-
 namespace Drupal\shunt\Form;
 
 use Drupal\Core\Entity\EntityConfirmFormBase;

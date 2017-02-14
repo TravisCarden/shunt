@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\shunt\Form\ShuntEditForm.
- */
-
 namespace Drupal\shunt\Form;
 
 use Drupal\Component\Utility\SafeMarkup;
@@ -58,7 +53,7 @@ class ShuntForm extends EntityForm {
     }
 
     $form['label'] = [
-      '#title' => t('Label'),
+      '#title' => $this->t('Label'),
       '#type' => 'textfield',
       '#default_value' => $shunt->label(),
       '#description' => t('The human-readable label for this shunt.'),
@@ -77,10 +72,10 @@ class ShuntForm extends EntityForm {
     ];
 
     $form['description'] = [
-      '#title' => t('Description'),
+      '#title' => $this->t('Description'),
       '#type' => 'textarea',
       '#default_value' => $shunt->getDescription(),
-      '#description' => t('Describe this shunt and the effect of enabling it.'),
+      '#description' => $this->t('Describe this shunt and the effect of enabling it.'),
       '#required' => TRUE,
     ];
 
@@ -96,10 +91,10 @@ class ShuntForm extends EntityForm {
 
     $t_args = ['%id' => $shunt->id()];
     if ($status == SAVED_UPDATED) {
-      drupal_set_message(t('Shunt %id has been updated.', $t_args));
+      drupal_set_message($this->t('Shunt %id has been updated.', $t_args));
     }
     elseif ($status == SAVED_NEW) {
-      drupal_set_message(t('Shunt %id has been added.', $t_args));
+      drupal_set_message($this->t('Shunt %id has been added.', $t_args));
       $this->logger('shunt')->notice('Added shunt %id.', $t_args);
     }
 

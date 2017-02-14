@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\shunt\Form\SetShuntStatusConfirmForm.
- */
-
 namespace Drupal\shunt\Form;
 
 use Drupal\Core\Form\ConfirmFormBase;
@@ -45,10 +40,10 @@ class SetShuntStatusConfirmForm extends ConfirmFormBase {
   public function getQuestion() {
     $t_args = ['%id' => $this->shunt->id()];
     if ($this->action == 'trip') {
-      $message = t('Are you sure you want to trip the %id shunt?', $t_args);
+      $message = $this->t('Are you sure you want to trip the %id shunt?', $t_args);
     }
     else {
-      $message = t('Are you sure you want to reset the %id shunt?', $t_args);
+      $message = $this->t('Are you sure you want to reset the %id shunt?', $t_args);
     }
     return $message;
   }
@@ -65,7 +60,7 @@ class SetShuntStatusConfirmForm extends ConfirmFormBase {
    */
   public function getConfirmText() {
     if ($this->action == 'trip') {
-      return t('Trip');
+      return $this->t('Trip');
     }
     else {
       return t('Reset');
@@ -76,7 +71,7 @@ class SetShuntStatusConfirmForm extends ConfirmFormBase {
    * {@inheritdoc}
    */
   public function getCancelText() {
-    return t('Cancel');
+    return $this->t('Cancel');
   }
 
   /**

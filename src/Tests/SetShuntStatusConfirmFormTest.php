@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\shunt\Tests\SetShuntStatusConfirmFormTest.
- */
-
 namespace Drupal\shunt\Tests;
 
 /**

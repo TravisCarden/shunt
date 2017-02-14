@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\shunt\Access\ShuntAccessCheck.
- */
-
 namespace Drupal\shunt\Access;
 
 use Drupal\Core\Access\AccessCheckInterface;
