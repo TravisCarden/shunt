@@ -46,13 +46,13 @@ class ShuntListBuilder extends ConfigEntityListBuilder {
     if ($entity->isTripped()) {
       $operations['reset'] = [
         'title' => $this->t('Reset'),
-        'url' => $entity->urlInfo('reset'),
+        'url' => $entity->toUrl('reset'),
       ];
     }
     else {
       $operations['trip'] = [
         'title' => $this->t('Trip'),
-        'url' => $entity->urlInfo('trip'),
+        'url' => $entity->toUrl('trip'),
       ];
     }
 
@@ -88,7 +88,7 @@ class ShuntListBuilder extends ConfigEntityListBuilder {
   /**
    * Returns the human-readable status of a shunt.
    *
-   * @param ShuntInterface $shunt
+   * @param \Drupal\shunt\Entity\ShuntInterface $shunt
    *   A shunt entity.
    *
    * @return string

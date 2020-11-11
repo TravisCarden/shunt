@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\shunt\Controller\ShuntexampleController.
- */
-
 namespace Drupal\shuntexample\Controller;
 
 use Drupal\shunt\Entity\Shunt;

@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\shuntexample\Tests\ShuntexampleTest.
- */
-
 namespace Drupal\shuntexample\Tests;
 
 use Drupal\shunt\Entity\Shunt;
